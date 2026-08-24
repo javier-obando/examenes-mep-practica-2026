@@ -1,0 +1,1402 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3558">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Práctica interactiva gratuita de Educación Cívica para secundaria, basada en material público del MEP/DGEC 2026.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Práctica de Educación Cívica - Secundaria</title>
+  <style>
+    :root {
+      --navy: #0b3558;
+      --navy-2: #164f77;
+      --blue: #1677b8;
+      --sky: #e9f4fb;
+      --ink: #172432;
+      --muted: #657487;
+      --line: #dbe4ec;
+      --paper: #ffffff;
+      --ground: #f3f6f8;
+      --green: #16835c;
+      --green-soft: #e6f6ef;
+      --red: #c54444;
+      --red-soft: #fff0ef;
+      --amber: #b97808;
+      --amber-soft: #fff6dc;
+      --shadow: 0 18px 50px rgba(17, 48, 76, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 2%, rgba(35, 137, 190, .12), transparent 30rem),
+        radial-gradient(circle at 94% 18%, rgba(41, 165, 126, .09), transparent 26rem),
+        var(--ground);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input { font: inherit; }
+
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .hidden { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 68px;
+      padding: 10px clamp(16px, 4vw, 48px);
+      color: white;
+      background: rgba(11, 53, 88, .96);
+      border-bottom: 1px solid rgba(255, 255, 255, .15);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: var(--navy);
+      background: #f4c54c;
+      border-radius: 12px;
+      font-size: 21px;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 1px;
+      color: #bcd6e8;
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .top-status {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .timer {
+      min-width: 92px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 999px;
+      color: #eaf5fb;
+      background: rgba(255, 255, 255, .08);
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: clamp(28px, 5vw, 58px) 0 70px;
+    }
+
+    .welcome-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(270px, .7fr);
+      overflow: hidden;
+      min-height: 620px;
+      background: var(--paper);
+      border: 1px solid rgba(11, 53, 88, .08);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .welcome-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(32px, 6vw, 76px);
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 0 14px;
+      padding: 7px 12px;
+      color: var(--navy-2);
+      background: var(--sky);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 18px;
+      color: var(--navy);
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .fact {
+      padding: 10px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: #3b4c5e;
+      background: #fbfdfe;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .name-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #405166;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .name-input {
+      width: min(100%, 460px);
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      color: var(--ink);
+      background: white;
+      border: 1px solid #cdd9e2;
+      border-radius: 12px;
+      outline: none;
+    }
+
+    .name-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(22, 119, 184, .12);
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+    .btn {
+      min-height: 46px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform .14s ease, background .14s ease, border-color .14s ease, box-shadow .14s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible { outline: 3px solid rgba(22, 119, 184, .28); outline-offset: 2px; }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--navy-2), var(--blue));
+      box-shadow: 0 10px 24px rgba(22, 89, 130, .22);
+    }
+
+    .btn-secondary {
+      color: var(--navy);
+      background: white;
+      border-color: #bfd0dc;
+    }
+
+    .btn-soft {
+      color: #3e5367;
+      background: #edf3f6;
+    }
+
+    .btn-danger {
+      color: #a43838;
+      background: #fff3f2;
+      border-color: #f1ceca;
+    }
+
+    .cover-panel {
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      background:
+        linear-gradient(160deg, rgba(8, 46, 75, .02), rgba(14, 92, 134, .12)),
+        #eef6fa;
+      border-left: 1px solid var(--line);
+    }
+
+    .cover-panel img {
+      width: min(100%, 390px);
+      border-radius: 9px;
+      box-shadow: 0 24px 50px rgba(12, 46, 70, .22);
+      transform: rotate(1.2deg);
+    }
+
+
+    .privacy-note,
+    .source-note {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .privacy-note { margin: 18px 0 5px; }
+    .source-note { margin: 0; }
+
+    .legal-notice {
+      margin-top: 22px;
+      padding: 18px 20px;
+      color: #4d6072;
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .legal-notice strong { color: var(--navy); }
+    .legal-notice p { margin: 5px 0 0; }
+    .legal-notice a { color: #0c6697; font-weight: 750; }
+
+    .civic-cover {
+      position: relative;
+      display: flex;
+      width: min(100%, 390px);
+      aspect-ratio: 765 / 990;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      padding: 42px;
+      color: white;
+      background: linear-gradient(150deg, #0b3558 0%, #176f9d 58%, #16a17a 100%);
+      border-radius: 12px;
+      box-shadow: 0 24px 50px rgba(12, 46, 70, .22);
+      transform: rotate(1.2deg);
+      isolation: isolate;
+    }
+
+    .civic-cover::before,
+    .civic-cover::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border: 2px solid rgba(255, 255, 255, .22);
+      border-radius: 50%;
+    }
+
+    .civic-cover::before { width: 280px; height: 280px; top: -72px; right: -92px; }
+    .civic-cover::after { width: 360px; height: 360px; bottom: -188px; left: -175px; }
+
+    .civic-cover__eyebrow {
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 7px 11px;
+      color: #0b3558;
+      background: #f4c54c;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .civic-cover strong {
+      font-size: clamp(42px, 5vw, 64px);
+      line-height: .95;
+      letter-spacing: -.05em;
+    }
+
+    .civic-cover__level {
+      margin-top: 12px;
+      color: #d8edf7;
+      font-size: 21px;
+      font-weight: 750;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .civic-cover__symbols {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 48px;
+    }
+
+    .civic-cover__symbols i {
+      display: grid;
+      min-height: 72px;
+      place-items: center;
+      color: white;
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 16px;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 850;
+      backdrop-filter: blur(8px);
+    }
+
+    .civic-cover__grid {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(255,255,255,.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.22) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, transparent, black 30%, black 75%, transparent);
+    }
+
+    .exam-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .question-card,
+    .palette-card,
+    .result-card {
+      background: var(--paper);
+      border: 1px solid rgba(11, 53, 88, .09);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 32px rgba(17, 48, 76, .08);
+    }
+
+    .question-card { overflow: hidden; }
+
+    .question-head {
+      padding: 24px 26px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .question-kicker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      align-items: center;
+      margin-bottom: 10px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+
+    .dot { width: 4px; height: 4px; background: #9ab1c0; border-radius: 50%; }
+
+    .question-head h2 {
+      margin-bottom: 0;
+      color: var(--navy);
+      font-size: clamp(25px, 3.5vw, 35px);
+      letter-spacing: -.025em;
+    }
+
+    .progress-track {
+      height: 7px;
+      overflow: hidden;
+      background: #e7eef3;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #1aa376, #2d91c6);
+      transition: width .25s ease;
+    }
+
+    .source-wrap {
+      position: relative;
+      padding: 22px 22px 10px;
+      background: #f8fafb;
+    }
+
+    .source-page {
+      display: block;
+      width: min(100%, 765px);
+      height: auto;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #d4dde4;
+      border-radius: 8px;
+      box-shadow: 0 8px 22px rgba(24, 46, 67, .08);
+      cursor: zoom-in;
+    }
+
+    .zoom-btn {
+      position: absolute;
+      top: 34px;
+      right: 34px;
+      min-height: 38px;
+      padding: 8px 12px;
+      color: white;
+      background: rgba(11, 53, 88, .9);
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 6px 18px rgba(11, 53, 88, .2);
+    }
+
+    .answer-area { padding: 22px 26px 26px; }
+
+    .answer-prompt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+      color: #536579;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .keyboard-hint { color: #8b98a5; font-size: 12px; font-weight: 650; }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .answer-button {
+      position: relative;
+      display: flex;
+      min-height: 64px;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      padding: 11px;
+      color: #33495c;
+      background: white;
+      border: 1px solid #cfdbe3;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: .15s ease;
+    }
+
+    .answer-button:hover {
+      color: var(--navy);
+      border-color: #79aeca;
+      background: #f5fbfe;
+    }
+
+    .answer-button.selected {
+      color: var(--navy);
+      border-color: var(--blue);
+      background: var(--sky);
+      box-shadow: inset 0 0 0 1px var(--blue);
+    }
+
+    .answer-letter {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: 15px;
+    }
+
+    .answer-button.correct {
+      color: #126a4c;
+      border-color: #3fa27f;
+      background: var(--green-soft);
+      box-shadow: inset 0 0 0 1px #3fa27f;
+    }
+
+    .answer-button.incorrect {
+      color: #a73737;
+      border-color: #db7272;
+      background: var(--red-soft);
+      box-shadow: inset 0 0 0 1px #db7272;
+    }
+
+    .answer-note {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .review-banner {
+      margin: 0 26px 22px;
+      padding: 14px 16px;
+      border-radius: 13px;
+      font-weight: 750;
+    }
+
+    .review-banner.good { color: #126a4c; background: var(--green-soft); }
+    .review-banner.bad { color: #9d3636; background: var(--red-soft); }
+    .review-banner.empty { color: #7c570d; background: var(--amber-soft); }
+
+    .question-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px 26px;
+      background: #fbfcfd;
+      border-top: 1px solid var(--line);
+    }
+
+    .nav-group { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .palette-card {
+      position: sticky;
+      top: 90px;
+      padding: 20px;
+    }
+
+    .palette-card h3 {
+      margin-bottom: 6px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .palette-card > p {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .palette button {
+      position: relative;
+      display: grid;
+      aspect-ratio: 1;
+      place-items: center;
+      padding: 0;
+      color: #536579;
+      background: #f4f7f9;
+      border: 1px solid #d9e2e8;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .palette button.answered { color: #0c6548; background: #def2e9; border-color: #9bd2bd; }
+    .palette button.current { color: white; background: var(--navy-2); border-color: var(--navy-2); box-shadow: 0 5px 12px rgba(11, 53, 88, .22); }
+    .palette button.marked::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 6px;
+      height: 6px;
+      background: #e19b22;
+      border: 1px solid white;
+      border-radius: 50%;
+    }
+    .palette button.review-correct { color: #0c6548; background: #def2e9; border-color: #7dc5a8; }
+    .palette button.review-wrong { color: #a33a3a; background: #ffe5e2; border-color: #e7a09a; }
+    .palette button.review-empty { color: #805b12; background: #fff4cf; border-color: #e8cb6f; }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+      margin-top: 17px;
+      color: #667688;
+      font-size: 12px;
+    }
+
+    .legend span { display: flex; align-items: center; gap: 8px; }
+    .legend i { width: 11px; height: 11px; border-radius: 3px; background: #f4f7f9; border: 1px solid #d9e2e8; }
+    .legend .l-answered { background: #def2e9; border-color: #9bd2bd; }
+    .legend .l-marked { background: #e19b22; border-color: #e19b22; border-radius: 50%; }
+
+    .mobile-palette { display: none; margin-bottom: 16px; }
+    .mobile-palette summary { cursor: pointer; color: var(--navy); font-weight: 800; }
+    .mobile-palette .palette { margin-top: 14px; grid-template-columns: repeat(10, 1fr); }
+
+    .result-card {
+      overflow: hidden;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .result-hero {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 34px;
+      align-items: center;
+      padding: clamp(28px, 5vw, 54px);
+      color: white;
+      background: linear-gradient(135deg, #0b3558, #176f9d);
+    }
+
+    .score-ring {
+      display: grid;
+      width: 190px;
+      height: 190px;
+      place-items: center;
+      background: conic-gradient(#51d3a5 var(--score-angle, 0deg), rgba(255, 255, 255, .15) 0);
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+    }
+
+    .score-inner {
+      display: grid;
+      width: 148px;
+      height: 148px;
+      place-items: center;
+      align-content: center;
+      background: #0c3b5f;
+      border-radius: 50%;
+      text-align: center;
+    }
+
+    .score-inner strong { font-size: 42px; line-height: 1; }
+    .score-inner span { margin-top: 7px; color: #bcdaea; font-size: 12px; font-weight: 750; text-transform: uppercase; }
+
+    .result-hero h2 { margin-bottom: 12px; font-size: clamp(30px, 5vw, 48px); letter-spacing: -.035em; }
+    .result-hero p { margin-bottom: 0; color: #d3e7f2; font-size: 17px; line-height: 1.6; }
+
+    .result-body { padding: clamp(24px, 5vw, 50px); }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .stat {
+      padding: 18px;
+      background: #f6f9fa;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .stat strong { display: block; margin-bottom: 3px; color: var(--navy); font-size: 25px; }
+    .stat span { color: var(--muted); font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .04em; }
+
+    .breakdown-title { margin-bottom: 14px; color: var(--navy); font-size: 20px; }
+
+    .breakdown { display: grid; gap: 9px; margin-bottom: 30px; }
+
+    .block-row {
+      display: grid;
+      grid-template-columns: minmax(170px, 1fr) minmax(120px, 1.4fr) 74px;
+      gap: 14px;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+
+    .block-row:nth-child(odd) { background: #f7f9fa; }
+    .block-name { color: #405267; font-size: 13px; font-weight: 750; }
+    .mini-track { height: 8px; overflow: hidden; background: #dfe8ed; border-radius: 99px; }
+    .mini-track i { display: block; height: 100%; background: linear-gradient(90deg, #1aa376, #2d91c6); border-radius: inherit; }
+    .block-score { color: #536579; font-size: 13px; font-weight: 850; text-align: right; }
+
+    dialog {
+      width: min(94vw, 980px);
+      max-height: 94vh;
+      padding: 0;
+      overflow: auto;
+      background: #f5f7f8;
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .34);
+    }
+
+    dialog::backdrop { background: rgba(4, 17, 28, .74); backdrop-filter: blur(4px); }
+
+    .dialog-head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      color: white;
+      background: var(--navy);
+    }
+
+    .dialog-head strong { font-size: 14px; }
+    .dialog-close { padding: 7px 11px; color: white; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: 8px; cursor: pointer; }
+    .dialog-image { display: block; width: 765px; max-width: none; height: auto; margin: 0 auto; }
+
+    .noscript {
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 20px;
+      color: #8a3434;
+      background: #fff2f1;
+      border: 1px solid #e5b5b1;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .welcome-card { grid-template-columns: 1fr; }
+      .cover-panel { display: none; }
+      .exam-shell { grid-template-columns: 1fr; }
+      .palette-card { display: none; }
+      .mobile-palette { display: block; }
+      .result-hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+      .result-hero p { max-width: 620px; }
+    }
+
+    @media (max-width: 640px) {
+      .topbar { min-height: 60px; padding: 8px 12px; }
+      .brand-mark { width: 36px; height: 36px; }
+      .brand small { display: none; }
+      .timer { min-width: 80px; font-size: 13px; }
+      main { width: min(100% - 18px, 1180px); padding-top: 18px; }
+      .welcome-copy { padding: 30px 24px; }
+      h1 { font-size: 42px; }
+      .lead { font-size: 16px; }
+      .question-head, .answer-area, .question-nav { padding-left: 16px; padding-right: 16px; }
+      .source-wrap { padding: 12px 8px 7px; }
+      .zoom-btn { top: 22px; right: 18px; }
+      .answers { grid-template-columns: repeat(2, 1fr); }
+      .keyboard-hint { display: none; }
+      .question-nav { flex-direction: column; }
+      .question-nav .btn { flex: 1; }
+      .nav-group { width: 100%; }
+      .mobile-palette .palette { grid-template-columns: repeat(5, 1fr); }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .block-row { grid-template-columns: 1fr 62px; gap: 8px; }
+      .mini-track { grid-column: 1 / -1; grid-row: 2; }
+    }
+
+    @media print {
+      .topbar, #welcome, #exam, .result-actions { display: none !important; }
+      body { background: white; }
+      main { width: 100%; padding: 0; }
+      .result-card { box-shadow: none; border: 0; }
+      .result-hero { color: black; background: white; border-bottom: 2px solid #173f5f; }
+      .result-hero p { color: #445; }
+      .score-ring { background: white; border: 4px solid #173f5f; }
+      .score-inner { color: black; background: white; }
+      .score-inner span { color: #445; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">⚖</span>
+      <span>Educación Cívica <small>Práctica de secundaria</small></span>
+    </div>
+    <div class="top-status">
+      <span id="modeLabel" class="hidden">Examen en curso</span>
+      <span id="timer" class="timer hidden" aria-label="Tiempo transcurrido">00:00:00</span>
+    </div>
+  </header>
+
+  <main>
+    <noscript><div class="noscript">Este examen necesita JavaScript habilitado para funcionar.</div></noscript>
+
+    <section id="welcome" class="welcome-card" aria-labelledby="welcomeTitle">
+      <div class="welcome-copy">
+        <p class="eyebrow">Simulador de examen</p>
+        <h1 id="welcomeTitle">Práctica de Educación Cívica</h1>
+        <p class="lead">Resuelva una pregunta a la vez. Sus respuestas se guardan automáticamente en este navegador y el solucionario se revela únicamente al finalizar.</p>
+        <div class="facts" aria-label="Características del examen">
+          <span class="fact">50 preguntas</span>
+          <span class="fact">4 bloques temáticos</span>
+          <span class="fact">Selección única A-D</span>
+          <span class="fact">Sin límite de tiempo</span>
+          <span class="fact">Sin envíos de datos</span>
+        </div>
+        <label class="name-label" for="studentName">Alias del estudiante (opcional)</label>
+        <input id="studentName" class="name-input" type="text" maxlength="40" autocomplete="off" placeholder="Use un alias, no su nombre completo">
+        <div class="actions">
+          <button id="startBtn" class="btn btn-primary" type="button">Comenzar examen</button>
+          <button id="discardBtn" class="btn btn-danger hidden" type="button">Descartar progreso</button>
+        </div>
+        <p class="privacy-note"><strong>Privacidad:</strong> use un alias. El progreso permanece únicamente en este navegador y nunca se envía a un servidor.</p>
+        <p class="source-note">Adaptación independiente y gratuita basada en la práctica pública MEP/DGEC 2026. No es un sitio oficial ni cuenta con patrocinio institucional.</p>
+      </div>
+      <div class="cover-panel" aria-hidden="true">
+        <div class="civic-cover"><span class="civic-cover__eyebrow">Práctica 2026</span><strong>Educación<br>Cívica</strong><span class="civic-cover__level">Secundaria</span><div class="civic-cover__symbols"><i>⚖</i><i>🗳</i><i>CR</i><i>✓</i></div><div class="civic-cover__grid"></div></div>
+      </div>
+</section>
+
+    <section id="exam" class="exam-shell hidden" aria-live="polite">
+      <div>
+        <details class="question-card mobile-palette">
+          <summary>Mapa de preguntas</summary>
+          <div id="mobilePalette" class="palette"></div>
+        </details>
+
+        <article class="question-card">
+          <div class="question-head">
+            <div class="question-kicker">
+              <span id="blockName"></span><span class="dot"></span><span id="blockItem"></span>
+            </div>
+            <h2 id="questionTitle">Pregunta 1 de 50</h2>
+          </div>
+          <div class="progress-track" aria-hidden="true"><div id="progressBar" class="progress-bar"></div></div>
+
+          <div class="source-wrap">
+            <img id="questionImage" class="source-page" alt="Enunciado original de la pregunta">
+            <button id="zoomBtn" class="zoom-btn" type="button" title="Ampliar la página">Ampliar</button>
+          </div>
+
+          <div class="answer-area">
+            <div class="answer-prompt">
+              <span>Seleccione una respuesta</span>
+              <span class="keyboard-hint">Atajos: A, B, C o D</span>
+            </div>
+            <div id="answers" class="answers" role="radiogroup" aria-label="Opciones de respuesta"></div>
+          </div>
+
+          <div id="reviewBanner" class="review-banner hidden"></div>
+
+          <nav class="question-nav" aria-label="Navegación del examen">
+            <div class="nav-group">
+              <button id="prevBtn" class="btn btn-secondary" type="button">Anterior</button>
+              <button id="markBtn" class="btn btn-soft" type="button">Marcar para revisar</button>
+            </div>
+            <div class="nav-group">
+              <button id="backToResultsBtn" class="btn btn-secondary hidden" type="button">Volver al resultado</button>
+              <button id="nextBtn" class="btn btn-primary" type="button">Siguiente</button>
+            </div>
+          </nav>
+        </article>
+      </div>
+
+      <aside class="palette-card" aria-label="Mapa de preguntas">
+        <h3>Mapa de preguntas</h3>
+        <p>Puede saltar entre preguntas. El punto ámbar indica que marcó una para revisarla.</p>
+        <div id="desktopPalette" class="palette"></div>
+        <div class="legend">
+          <span><i></i> Sin responder</span>
+          <span><i class="l-answered"></i> Respondida</span>
+          <span><i class="l-marked"></i> Marcada</span>
+        </div>
+      </aside>
+    </section>
+
+    <section id="results" class="result-card hidden" aria-labelledby="resultTitle">
+      <div class="result-hero">
+        <div id="scoreRing" class="score-ring">
+          <div class="score-inner"><strong id="scorePercent">0%</strong><span>Puntuación</span></div>
+        </div>
+        <div>
+          <p class="eyebrow">Examen finalizado</p>
+          <h2 id="resultTitle">Resultado de la práctica</h2>
+          <p id="resultMessage"></p>
+        </div>
+      </div>
+      <div class="result-body">
+        <div class="stat-grid">
+          <div class="stat"><strong id="correctStat">0</strong><span>Correctas</span></div>
+          <div class="stat"><strong id="wrongStat">0</strong><span>Incorrectas</span></div>
+          <div class="stat"><strong id="emptyStat">0</strong><span>Sin responder</span></div>
+          <div class="stat"><strong id="timeStat">00:00</strong><span>Tiempo</span></div>
+        </div>
+
+        <h3 class="breakdown-title">Desempeño por bloque</h3>
+        <div id="breakdown" class="breakdown"></div>
+
+        <div class="actions result-actions">
+          <button id="reviewErrorsBtn" class="btn btn-primary" type="button">Revisar errores</button>
+          <button id="reviewAllBtn" class="btn btn-secondary" type="button">Revisar todas</button>
+          <button id="printBtn" class="btn btn-soft" type="button">Imprimir resultado</button>
+          <button id="restartBtn" class="btn btn-danger" type="button">Intentar de nuevo</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="legal-notice" aria-label="Fuente, licencia y aviso de independencia">
+      <strong>Fuente, licencia y aviso de independencia</strong>
+      <p>Fuente: Ministerio de Educación Pública de Costa Rica (MEP), Dirección de Gestión y Evaluación de la Calidad (DGEC), <cite>Práctica de Educación Cívica — Secundaria, 2026</cite>. Consulte el <a href="https://portaldgec.mep.go.cr/pruebanacional" target="_blank" rel="noopener noreferrer">portal oficial de Pruebas Nacionales</a>.</p>
+      <p>La presentación y la interacción fueron adaptadas a formato HTML; las preguntas y el solucionario se conservaron. El contenido fuente se reutiliza conforme a los <a href="https://www.mep.go.cr/terminos-condiciones-uso" target="_blank" rel="noopener noreferrer">términos de uso del MEP</a> y la licencia <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.es" target="_blank" rel="noopener noreferrer">CC BY-NC 4.0</a>. Uso educativo y no comercial.</p>
+      <p>Esta herramienta es independiente: no está afiliada, patrocinada ni operada por el MEP o la DGEC. En caso de diferencia, prevalece el documento oficial.</p>
+    </aside>
+  </main>
+
+  <dialog id="zoomDialog">
+    <div class="dialog-head"><strong>Enunciado original</strong><button id="closeDialogBtn" class="dialog-close" type="button">Cerrar</button></div>
+    <img id="dialogImage" class="dialog-image" alt="Enunciado original ampliado">
+  </dialog>
+
+  <script>
+    "use strict";
+
+    const QUESTIONS = [{"id":1,"block":"Los regímenes políticos","blockItem":1,"sourcePage":"2","correct":"B","image":"educacion-civica-assets/page-02.png"},{"id":2,"block":"Los regímenes políticos","blockItem":2,"sourcePage":"3","correct":"B","image":"educacion-civica-assets/page-03.png"},{"id":3,"block":"Los regímenes políticos","blockItem":3,"sourcePage":"4","correct":"C","image":"educacion-civica-assets/page-04.png"},{"id":4,"block":"Los regímenes políticos","blockItem":4,"sourcePage":"5","correct":"C","image":"educacion-civica-assets/page-05.png"},{"id":5,"block":"Los regímenes políticos","blockItem":5,"sourcePage":"6","correct":"C","image":"educacion-civica-assets/page-06.png"},{"id":6,"block":"Los regímenes políticos","blockItem":6,"sourcePage":"7","correct":"A","image":"educacion-civica-assets/page-07.png"},{"id":7,"block":"Los regímenes políticos","blockItem":7,"sourcePage":"8","correct":"B","image":"educacion-civica-assets/page-08.png"},{"id":8,"block":"Los regímenes políticos","blockItem":8,"sourcePage":"9","correct":"B","image":"educacion-civica-assets/page-09.png"},{"id":9,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":1,"sourcePage":"10","correct":"C","image":"educacion-civica-assets/page-10.png"},{"id":10,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":2,"sourcePage":"11","correct":"C","image":"educacion-civica-assets/page-11.png"},{"id":11,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":3,"sourcePage":"12","correct":"C","image":"educacion-civica-assets/page-12.png"},{"id":12,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":4,"sourcePage":"13","correct":"A","image":"educacion-civica-assets/page-13.png"},{"id":13,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":5,"sourcePage":"14","correct":"C","image":"educacion-civica-assets/page-14.png"},{"id":14,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":6,"sourcePage":"15","correct":"A","image":"educacion-civica-assets/page-15.png"},{"id":15,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":7,"sourcePage":"16","correct":"A","image":"educacion-civica-assets/page-16.png"},{"id":16,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":8,"sourcePage":"17","correct":"C","image":"educacion-civica-assets/page-17.png"},{"id":17,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":9,"sourcePage":"18","correct":"A","image":"educacion-civica-assets/page-18.png"},{"id":18,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":10,"sourcePage":"19","correct":"C","image":"educacion-civica-assets/page-19.png"},{"id":19,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":11,"sourcePage":"20","correct":"C","image":"educacion-civica-assets/page-20.png"},{"id":20,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":12,"sourcePage":"21","correct":"B","image":"educacion-civica-assets/page-21.png"},{"id":21,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":13,"sourcePage":"22","correct":"A","image":"educacion-civica-assets/page-22.png"},{"id":22,"block":"Organización y funcionamiento del régimen político democrático costarricense","blockItem":14,"sourcePage":"23","correct":"C","image":"educacion-civica-assets/page-23.png"},{"id":23,"block":"Sistema electoral de Costa Rica","blockItem":1,"sourcePage":"24","correct":"A","image":"educacion-civica-assets/page-24.png"},{"id":24,"block":"Sistema electoral de Costa Rica","blockItem":2,"sourcePage":"25","correct":"B","image":"educacion-civica-assets/page-25.png"},{"id":25,"block":"Sistema electoral de Costa Rica","blockItem":3,"sourcePage":"26","correct":"A","image":"educacion-civica-assets/page-26.png"},{"id":26,"block":"Sistema electoral de Costa Rica","blockItem":4,"sourcePage":"27","correct":"B","image":"educacion-civica-assets/page-27.png"},{"id":27,"block":"Sistema electoral de Costa Rica","blockItem":5,"sourcePage":"28","correct":"B","image":"educacion-civica-assets/page-28.png"},{"id":28,"block":"Sistema electoral de Costa Rica","blockItem":6,"sourcePage":"29","correct":"B","image":"educacion-civica-assets/page-29.png"},{"id":29,"block":"Sistema electoral de Costa Rica","blockItem":7,"sourcePage":"30","correct":"B","image":"educacion-civica-assets/page-30.png"},{"id":30,"block":"Sistema electoral de Costa Rica","blockItem":8,"sourcePage":"31","correct":"A","image":"educacion-civica-assets/page-31.png"},{"id":31,"block":"Sistema electoral de Costa Rica","blockItem":9,"sourcePage":"32","correct":"B","image":"educacion-civica-assets/page-32.png"},{"id":32,"block":"Sistema electoral de Costa Rica","blockItem":10,"sourcePage":"33","correct":"D","image":"educacion-civica-assets/page-33.png"},{"id":33,"block":"Sistema electoral de Costa Rica","blockItem":11,"sourcePage":"34","correct":"C","image":"educacion-civica-assets/page-34.png"},{"id":34,"block":"Sistema electoral de Costa Rica","blockItem":12,"sourcePage":"35","correct":"A","image":"educacion-civica-assets/page-35.png"},{"id":35,"block":"Sistema electoral de Costa Rica","blockItem":13,"sourcePage":"36","correct":"A","image":"educacion-civica-assets/page-36.png"},{"id":36,"block":"Sistema electoral de Costa Rica","blockItem":14,"sourcePage":"37","correct":"A","image":"educacion-civica-assets/page-37.png"},{"id":37,"block":"Sistema electoral de Costa Rica","blockItem":15,"sourcePage":"38","correct":"C","image":"educacion-civica-assets/page-38.png"},{"id":38,"block":"Sistema electoral de Costa Rica","blockItem":16,"sourcePage":"39","correct":"C","image":"educacion-civica-assets/page-39.png"},{"id":39,"block":"Sistema electoral de Costa Rica","blockItem":17,"sourcePage":"40","correct":"C","image":"educacion-civica-assets/page-40.png"},{"id":40,"block":"Sistema electoral de Costa Rica","blockItem":18,"sourcePage":"41","correct":"B","image":"educacion-civica-assets/page-41.png"},{"id":41,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":1,"sourcePage":"42","correct":"B","image":"educacion-civica-assets/page-42.png"},{"id":42,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":2,"sourcePage":"43","correct":"B","image":"educacion-civica-assets/page-43.png"},{"id":43,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":3,"sourcePage":"44","correct":"C","image":"educacion-civica-assets/page-44.png"},{"id":44,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":4,"sourcePage":"45","correct":"A","image":"educacion-civica-assets/page-45.png"},{"id":45,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":5,"sourcePage":"46","correct":"B","image":"educacion-civica-assets/page-46.png"},{"id":46,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":6,"sourcePage":"47","correct":"B","image":"educacion-civica-assets/page-47.png"},{"id":47,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":7,"sourcePage":"48","correct":"A","image":"educacion-civica-assets/page-48.png"},{"id":48,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":8,"sourcePage":"49","correct":"D","image":"educacion-civica-assets/page-49.png"},{"id":49,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":9,"sourcePage":"50","correct":"A","image":"educacion-civica-assets/page-50.png"},{"id":50,"block":"El Estado costarricense garante de la igualdad de oportunidades","blockItem":10,"sourcePage":"51","correct":"C","image":"educacion-civica-assets/page-51.png"}];
+    const LETTERS = ["A", "B", "C", "D"];
+    const STORAGE_KEY = "educacion-civica-secundaria-examen-v1";
+
+    const elements = {
+      welcome: document.querySelector("#welcome"),
+      exam: document.querySelector("#exam"),
+      results: document.querySelector("#results"),
+      studentName: document.querySelector("#studentName"),
+      startBtn: document.querySelector("#startBtn"),
+      discardBtn: document.querySelector("#discardBtn"),
+      modeLabel: document.querySelector("#modeLabel"),
+      timer: document.querySelector("#timer"),
+      blockName: document.querySelector("#blockName"),
+      blockItem: document.querySelector("#blockItem"),
+      questionTitle: document.querySelector("#questionTitle"),
+      progressBar: document.querySelector("#progressBar"),
+      questionImage: document.querySelector("#questionImage"),
+      answers: document.querySelector("#answers"),
+      reviewBanner: document.querySelector("#reviewBanner"),
+      prevBtn: document.querySelector("#prevBtn"),
+      markBtn: document.querySelector("#markBtn"),
+      nextBtn: document.querySelector("#nextBtn"),
+      backToResultsBtn: document.querySelector("#backToResultsBtn"),
+      desktopPalette: document.querySelector("#desktopPalette"),
+      mobilePalette: document.querySelector("#mobilePalette"),
+      zoomBtn: document.querySelector("#zoomBtn"),
+      zoomDialog: document.querySelector("#zoomDialog"),
+      dialogImage: document.querySelector("#dialogImage"),
+      closeDialogBtn: document.querySelector("#closeDialogBtn"),
+      scoreRing: document.querySelector("#scoreRing"),
+      scorePercent: document.querySelector("#scorePercent"),
+      resultTitle: document.querySelector("#resultTitle"),
+      resultMessage: document.querySelector("#resultMessage"),
+      correctStat: document.querySelector("#correctStat"),
+      wrongStat: document.querySelector("#wrongStat"),
+      emptyStat: document.querySelector("#emptyStat"),
+      timeStat: document.querySelector("#timeStat"),
+      breakdown: document.querySelector("#breakdown"),
+      reviewErrorsBtn: document.querySelector("#reviewErrorsBtn"),
+      reviewAllBtn: document.querySelector("#reviewAllBtn"),
+      printBtn: document.querySelector("#printBtn"),
+      restartBtn: document.querySelector("#restartBtn")
+    };
+
+    let state = createInitialState();
+    let timerId = null;
+
+    function createInitialState() {
+      return {
+        current: 0,
+        answers: {},
+        marked: {},
+        startedAt: null,
+        finishedAt: null,
+        studentName: "",
+        completed: false,
+        mode: "exam",
+        reviewList: null,
+        reviewPosition: 0
+      };
+    }
+
+    function loadState() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!stored || typeof stored !== "object") return;
+        state = { ...createInitialState(), ...stored, mode: "exam", reviewList: null, reviewPosition: 0 };
+        elements.studentName.value = state.studentName || "";
+
+        if (state.completed) {
+          showResults();
+          return;
+        }
+
+        if (state.startedAt) {
+          elements.startBtn.textContent = "Continuar examen";
+          elements.discardBtn.classList.remove("hidden");
+        }
+      } catch (error) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+
+    function saveState() {
+      const persisted = { ...state, mode: "exam", reviewList: null, reviewPosition: 0 };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
+    }
+
+    function formatDuration(milliseconds, compact = false) {
+      const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      const pad = (value) => String(value).padStart(2, "0");
+      return compact && hours === 0 ? `${pad(minutes)}:${pad(seconds)}` : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    function elapsedTime() {
+      if (!state.startedAt) return 0;
+      return (state.finishedAt || Date.now()) - state.startedAt;
+    }
+
+    function updateTimer() {
+      elements.timer.textContent = formatDuration(elapsedTime());
+    }
+
+    function startTimer() {
+      clearInterval(timerId);
+      updateTimer();
+      timerId = setInterval(updateTimer, 1000);
+    }
+
+    function currentQuestionIndex() {
+      if (state.mode === "review" && Array.isArray(state.reviewList)) {
+        return state.reviewList[state.reviewPosition];
+      }
+      return state.current;
+    }
+
+    function startExam() {
+      if (!state.startedAt) {
+        state.startedAt = Date.now();
+        state.studentName = elements.studentName.value.trim();
+      }
+      state.mode = "exam";
+      saveState();
+      showSection("exam");
+      elements.modeLabel.textContent = "Examen en curso";
+      elements.modeLabel.classList.remove("hidden");
+      elements.timer.classList.remove("hidden");
+      startTimer();
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showSection(sectionName) {
+      elements.welcome.classList.toggle("hidden", sectionName !== "welcome");
+      elements.exam.classList.toggle("hidden", sectionName !== "exam");
+      elements.results.classList.toggle("hidden", sectionName !== "results");
+    }
+
+    function renderQuestion() {
+      const globalIndex = currentQuestionIndex();
+      const question = QUESTIONS[globalIndex];
+      const answer = state.answers[globalIndex] || null;
+      const isReview = state.mode === "review";
+      const position = isReview && state.reviewList ? state.reviewPosition + 1 : globalIndex + 1;
+      const total = isReview && state.reviewList ? state.reviewList.length : QUESTIONS.length;
+
+      state.current = globalIndex;
+      elements.blockName.textContent = question.block;
+      elements.blockItem.textContent = `Ítem ${question.blockItem}`;
+      elements.questionTitle.textContent = isReview
+        ? `Revisión ${position} de ${total} · Pregunta global ${globalIndex + 1}`
+        : `Pregunta ${globalIndex + 1} de ${QUESTIONS.length}`;
+      elements.progressBar.style.width = `${(position / total) * 100}%`;
+      elements.questionImage.src = question.image;
+      elements.questionImage.alt = `Enunciado original de la pregunta ${globalIndex + 1}, bloque ${question.block}`;
+      elements.dialogImage.src = question.image;
+
+      renderAnswers(question, answer, isReview);
+      renderReviewBanner(question, answer, isReview);
+      renderPalettes(globalIndex, isReview);
+
+      elements.prevBtn.disabled = position <= 1;
+      elements.markBtn.classList.toggle("hidden", isReview);
+      elements.markBtn.textContent = state.marked[globalIndex] ? "Quitar marca" : "Marcar para revisar";
+      elements.backToResultsBtn.classList.toggle("hidden", !isReview);
+      elements.nextBtn.textContent = position === total ? (isReview ? "Volver al resultado" : "Finalizar examen") : "Siguiente";
+      elements.modeLabel.textContent = isReview ? "Revisión del solucionario" : "Examen en curso";
+      document.title = `${isReview ? "Revisión" : "Pregunta"} ${globalIndex + 1} · Español`;
+    }
+
+    function renderAnswers(question, selectedAnswer, isReview) {
+      elements.answers.replaceChildren();
+
+      LETTERS.forEach((letter) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "answer-button";
+        button.setAttribute("role", "radio");
+        button.setAttribute("aria-checked", String(selectedAnswer === letter));
+        button.dataset.letter = letter;
+
+        if (!isReview && selectedAnswer === letter) button.classList.add("selected");
+        if (isReview && letter === question.correct) button.classList.add("correct");
+        if (isReview && selectedAnswer === letter && selectedAnswer !== question.correct) button.classList.add("incorrect");
+
+        const note = isReview && letter === question.correct
+          ? '<span class="answer-note">Respuesta correcta</span>'
+          : isReview && selectedAnswer === letter
+            ? '<span class="answer-note">Su respuesta</span>'
+            : "";
+
+        button.innerHTML = `<span class="answer-letter">${letter}</span><span>Opción ${letter}${note}</span>`;
+        button.disabled = isReview;
+        button.addEventListener("click", () => selectAnswer(letter));
+        elements.answers.append(button);
+      });
+    }
+
+    function renderReviewBanner(question, selectedAnswer, isReview) {
+      elements.reviewBanner.className = "review-banner hidden";
+      if (!isReview) return;
+
+      elements.reviewBanner.classList.remove("hidden");
+      if (!selectedAnswer) {
+        elements.reviewBanner.classList.add("empty");
+        elements.reviewBanner.textContent = `No respondió esta pregunta. La clave correcta es ${question.correct}.`;
+      } else if (selectedAnswer === question.correct) {
+        elements.reviewBanner.classList.add("good");
+        elements.reviewBanner.textContent = `Correcto. Seleccionó la opción ${selectedAnswer}.`;
+      } else {
+        elements.reviewBanner.classList.add("bad");
+        elements.reviewBanner.textContent = `Su respuesta fue ${selectedAnswer}; la clave correcta es ${question.correct}.`;
+      }
+    }
+
+    function selectAnswer(letter) {
+      if (state.mode === "review") return;
+      const index = currentQuestionIndex();
+      state.answers[index] = letter;
+      saveState();
+      renderQuestion();
+    }
+
+    function renderPalettes(currentIndex, isReview) {
+      [elements.desktopPalette, elements.mobilePalette].forEach((container) => {
+        container.replaceChildren();
+        QUESTIONS.forEach((question, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = String(index + 1);
+          button.title = `${question.block}, ítem ${question.blockItem}`;
+          if (state.answers[index]) button.classList.add("answered");
+          if (state.marked[index]) button.classList.add("marked");
+          if (index === currentIndex) button.classList.add("current");
+
+          if (isReview) {
+            if (!state.answers[index]) button.classList.add("review-empty");
+            else if (state.answers[index] === question.correct) button.classList.add("review-correct");
+            else button.classList.add("review-wrong");
+          }
+
+          button.addEventListener("click", () => jumpToQuestion(index));
+          container.append(button);
+        });
+      });
+    }
+
+    function jumpToQuestion(index) {
+      if (state.mode === "review") {
+        state.reviewList = QUESTIONS.map((_, questionIndex) => questionIndex);
+        state.reviewPosition = index;
+      } else {
+        state.current = index;
+        saveState();
+      }
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function moveQuestion(direction) {
+      if (state.mode === "review") {
+        const nextPosition = state.reviewPosition + direction;
+        if (nextPosition < 0) return;
+        if (nextPosition >= state.reviewList.length) {
+          showResults();
+          return;
+        }
+        state.reviewPosition = nextPosition;
+      } else {
+        const nextIndex = state.current + direction;
+        if (nextIndex < 0) return;
+        if (nextIndex >= QUESTIONS.length) {
+          finishExam();
+          return;
+        }
+        state.current = nextIndex;
+        saveState();
+      }
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function finishExam() {
+      const emptyCount = QUESTIONS.length - Object.keys(state.answers).length;
+      const message = emptyCount > 0
+        ? `Aún hay ${emptyCount} pregunta${emptyCount === 1 ? "" : "s"} sin responder. ¿Desea finalizar y ver el solucionario?`
+        : "¿Desea finalizar el examen y ver el solucionario?";
+      if (!window.confirm(message)) return;
+
+      state.completed = true;
+      state.finishedAt = Date.now();
+      state.mode = "exam";
+      saveState();
+      clearInterval(timerId);
+      showResults();
+    }
+
+    function calculateResults() {
+      let correct = 0;
+      let wrong = 0;
+      let empty = 0;
+
+      QUESTIONS.forEach((question, index) => {
+        const answer = state.answers[index];
+        if (!answer) empty += 1;
+        else if (answer === question.correct) correct += 1;
+        else wrong += 1;
+      });
+
+      return { correct, wrong, empty, percent: Math.round((correct / QUESTIONS.length) * 100) };
+    }
+
+    function showResults() {
+      if (!state.completed) return;
+      const result = calculateResults();
+      const student = state.studentName ? `, ${state.studentName}` : "";
+      clearInterval(timerId);
+      showSection("results");
+      elements.modeLabel.classList.add("hidden");
+      elements.timer.classList.add("hidden");
+      elements.scorePercent.textContent = `${result.percent}%`;
+      elements.scoreRing.style.setProperty("--score-angle", `${result.percent * 3.6}deg`);
+      elements.resultTitle.textContent = `Resultado${student}`;
+      elements.resultMessage.textContent = `Obtuvo ${result.correct} respuestas correctas de ${QUESTIONS.length}. Revise los bloques y las preguntas para identificar qué contenidos conviene reforzar.`;
+      elements.correctStat.textContent = result.correct;
+      elements.wrongStat.textContent = result.wrong;
+      elements.emptyStat.textContent = result.empty;
+      elements.timeStat.textContent = formatDuration(elapsedTime(), true);
+      elements.reviewErrorsBtn.disabled = result.wrong + result.empty === 0;
+      renderBreakdown();
+      document.title = `Resultado ${result.percent}% · Español`;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderBreakdown() {
+      const groups = new Map();
+      QUESTIONS.forEach((question, index) => {
+        if (!groups.has(question.block)) groups.set(question.block, { total: 0, correct: 0 });
+        const group = groups.get(question.block);
+        group.total += 1;
+        if (state.answers[index] === question.correct) group.correct += 1;
+      });
+
+      elements.breakdown.replaceChildren();
+      groups.forEach((group, blockName) => {
+        const percent = Math.round((group.correct / group.total) * 100);
+        const row = document.createElement("div");
+        row.className = "block-row";
+        row.innerHTML = `
+          <span class="block-name">${blockName}</span>
+          <span class="mini-track" aria-label="${percent}% correcto"><i style="width:${percent}%"></i></span>
+          <span class="block-score">${group.correct} / ${group.total}</span>`;
+        elements.breakdown.append(row);
+      });
+    }
+
+    function startReview(onlyErrors) {
+      const list = QUESTIONS
+        .map((question, index) => ({ question, index }))
+        .filter(({ question, index }) => !onlyErrors || state.answers[index] !== question.correct)
+        .map(({ index }) => index);
+      if (list.length === 0) return;
+
+      state.mode = "review";
+      state.reviewList = list;
+      state.reviewPosition = 0;
+      showSection("exam");
+      elements.modeLabel.classList.remove("hidden");
+      elements.timer.classList.remove("hidden");
+      updateTimer();
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function restartExam() {
+      if (!window.confirm("Se eliminarán las respuestas de este intento. ¿Desea comenzar de nuevo?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state = createInitialState();
+      elements.studentName.value = "";
+      elements.startBtn.textContent = "Comenzar examen";
+      elements.discardBtn.classList.add("hidden");
+      elements.modeLabel.classList.add("hidden");
+      elements.timer.classList.add("hidden");
+      showSection("welcome");
+      document.title = "Práctica de Educación Cívica - Secundaria";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function discardProgress() {
+      if (!window.confirm("¿Desea descartar el progreso guardado?")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state = createInitialState();
+      elements.startBtn.textContent = "Comenzar examen";
+      elements.discardBtn.classList.add("hidden");
+      elements.studentName.value = "";
+    }
+
+    elements.startBtn.addEventListener("click", startExam);
+    elements.discardBtn.addEventListener("click", discardProgress);
+    elements.prevBtn.addEventListener("click", () => moveQuestion(-1));
+    elements.nextBtn.addEventListener("click", () => moveQuestion(1));
+    elements.markBtn.addEventListener("click", () => {
+      const index = currentQuestionIndex();
+      state.marked[index] = !state.marked[index];
+      if (!state.marked[index]) delete state.marked[index];
+      saveState();
+      renderQuestion();
+    });
+    elements.backToResultsBtn.addEventListener("click", showResults);
+    elements.reviewErrorsBtn.addEventListener("click", () => startReview(true));
+    elements.reviewAllBtn.addEventListener("click", () => startReview(false));
+    elements.printBtn.addEventListener("click", () => window.print());
+    elements.restartBtn.addEventListener("click", restartExam);
+    elements.zoomBtn.addEventListener("click", () => elements.zoomDialog.showModal());
+    elements.questionImage.addEventListener("click", () => elements.zoomDialog.showModal());
+    elements.closeDialogBtn.addEventListener("click", () => elements.zoomDialog.close());
+    elements.zoomDialog.addEventListener("click", (event) => {
+      if (event.target === elements.zoomDialog) elements.zoomDialog.close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (elements.exam.classList.contains("hidden") || elements.zoomDialog.open) return;
+      if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
+      const key = event.key.toUpperCase();
+      if (LETTERS.includes(key) && state.mode !== "review") selectAnswer(key);
+      if (event.key === "ArrowLeft") moveQuestion(-1);
+      if (event.key === "ArrowRight") moveQuestion(1);
+    });
+
+    loadState();
+  </script>
+</body>
+</html>
