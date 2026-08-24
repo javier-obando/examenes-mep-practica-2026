@@ -11,6 +11,7 @@ Materias disponibles:
 - Ciencias
 - Estudios Sociales
 - Matemáticas
+- Español
 
 ## Privacidad
 
