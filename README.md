@@ -12,6 +12,7 @@ Materias disponibles:
 - Estudios Sociales
 - Matemáticas
 - Español
+- Educación Cívica
 
 ## Privacidad
 
